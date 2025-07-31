@@ -835,8 +835,11 @@ def main():
             )
             progress.advance(task, advance=20)
             progress.update(task, description="Analyzing resources...")
-            pe = pefile.PE(file_to_scan)
-            resources = anares(pe)
+            try:
+                pe = pefile.PE(file_to_scan)
+                resources = anares(pe)
+            except pefile.PEFormatError:
+                resources = []
             progress.advance(task, advance=20)
             progress.update(task, description="Generating final report...")
             progress.advance(task, advance=10)
